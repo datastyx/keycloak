@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- This patch is to support long user attribute values (claims) in the database. 
+    Current script is for postgres and not for production due to https://lists.jboss.org/pipermail/keycloak-user/2015-August/002849.html. 
+    Issue in keycloak allready exists and future versions should support turnaround (https://issues.jboss.org/browse/KEYCLOAK-2382) -->
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet author="datastyx.com" id="10.0.0-user-attributes">
+        <preConditions onSqlOutput="TEST" onFail="MARK_RAN">
+            <dbms type="postgresql" />
+        </preConditions>
+
+        <modifyDataType tableName="USER_ATTRIBUTE" columnName="VALUE" newDataType="text"/>
+    </changeSet>
+
+</databaseChangeLog>
